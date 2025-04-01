@@ -1,0 +1,51 @@
+
+<!-- carts.component.html -->
+<!-- <div class="container">
+  <h2>Your Cart</h2>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="cartItems.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+  <div class="cart-item" *ngFor="let cartItem of cartItems">
+    <div class="item-info">
+      <h3>Product ID: {{ cartItem.item.id }}</h3>
+      <h3>{{ cartItem.item.name }}</h3>
+      <p>Price: ${{ cartItem.item.price }}</p>
+      <p>Quantity: {{ cartItem.quantity }}</p>
+      <p>Subtotal: ${{ cartItem.subtotal }}</p>
+    </div>
+    <div class="item-actions">
+      <button (click)="updateItem(cartItem, '+')">+</button>
+      <button (click)="updateItem(cartItem, '-')">-</button>
+      <button (click)="removeItem(cartItem)">Remove</button>
+    </div>
+  </div>
+  <div class="total">
+    <h3>Total: ${{ totalPrice }}</h3>
+  </div>
+</div> -->
+
+
+<div class="container">
+  <h2>Your Cart</h2>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="cartItems.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+  <div class="cart-item" *ngFor="let cartItem of cartItems">
+    <div class="item-info">
+      <h3>Product ID: {{ cartItem.item_id }}</h3>
+      <h3>{{ cartItem.item.name }}</h3>
+      <p>Price: ${{ cartItem.item.price }}</p>
+      <p>Quantity: {{ cartItem.item_count }}</p>
+    </div>
+    <div class="item-actions">
+      <button (click)="updateItem(cartItem, '+')">+</button>
+      <button (click)="updateItem(cartItem, '-')">-</button>
+      <button (click)="removeItem(cartItem)">Remove</button>
+    </div>
+  </div>
+  <div class="total">
+    <h3>Total: ${{ totalPrice }}</h3>
+  </div>
+</div>

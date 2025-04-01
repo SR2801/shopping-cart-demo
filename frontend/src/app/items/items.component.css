@@ -1,0 +1,19 @@
+.container {
+    padding: 1rem;
+  }
+  
+  .item-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+  .item-card:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .error {
+    color: red;
+  }
+  

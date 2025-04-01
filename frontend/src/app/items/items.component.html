@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>Items Catalog</h2>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div class="item-card" *ngFor="let item of items" (click)="viewItem(item)">
+    <h3>{{ item.id }}</h3>
+    <h3>{{ item.name }}</h3>
+    <p *ngIf="item.description">{{ item.description }}</p>
+    <p *ngIf="item.price">Price: ${{ item.price }}</p>
+    <p *ngIf="item.rating">Rating: {{ item.rating }}</p>
+  </div>
+</div>

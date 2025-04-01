@@ -1,0 +1,36 @@
+.container {
+    padding: 1rem;
+  }
+  
+  .cart-item {
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .item-actions button {
+    margin-right: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border: none;
+    background-color: #007acc;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .item-actions button:hover {
+    background-color: #005fa3;
+  }
+  
+  .total {
+    text-align: right;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .error {
+    color: red;
+  }
+  

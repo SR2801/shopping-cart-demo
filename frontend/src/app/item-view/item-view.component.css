@@ -1,0 +1,22 @@
+.container {
+    padding: 1rem;
+  }
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #005fa3;
+  }
+  .success {
+    color: green;
+    margin-top: 1rem;
+  }
+  .error {
+    color: red;
+    margin-top: 1rem;
+  }
+  

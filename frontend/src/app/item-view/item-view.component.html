@@ -1,0 +1,10 @@
+<div class="container" *ngIf="item">
+  <h2>Item Id: {{ item.id }}</h2>
+  <h2>{{ item.name }}</h2>
+  <p *ngIf="item.description">{{ item.description }}</p>
+  <p *ngIf="item.price">Price: ${{ item.price }}</p>
+  <p *ngIf="item.rating">Rating: {{ item.rating }}</p>
+  <button (click)="addToCart()">Add to Cart</button>
+  <div *ngIf="success" class="success">{{ success }}</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>
