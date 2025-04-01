@@ -1,0 +1,13 @@
+services:
+  web:
+    image: sandeepraman/shopping
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: "03c9c64ba19a48568263f8fd50a456c2fc5f956f478ebe39d15ce90aec178c5ca0db71836fbff9644909168f7388dd05d4034386f8ff335fc38b083f02d96744"
+      DB_PASSWORD: ""
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: shopping_production
+

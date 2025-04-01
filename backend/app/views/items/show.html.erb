@@ -1,0 +1,19 @@
+<nav style="display: flex; flex-direction: row; gap: 20px;">
+<%= link_to "Back to Main Menu", items_path%>
+<%= link_to "Edit Item", edit_item_path(@item.id)%>
+<%= button_to "Delete", @item, method: :delete, data: {turbo_confirm: "Are you sure?"}%>
+</nav>
+<section class = "item">
+    <% cache @item do %>
+    <%= image_tag @item.featured_image if @item.featured_image.attached?%>
+    <section class = "item-info">
+        <h1 style = "width: 1200px" ><%= @item.name%></h1>
+        <h2>$<%= @item.price%></h2>
+        <h3> Rating: <%= @item.rating || 0 %> </h3>
+        <h4>Item Description:</h4>
+        <h3><%= @item.description %></h3>
+        <h4>Stock Available:</h4>
+        <h3><%= render "inventory", item: @item%></h3>
+    </section>
+    <% end %>
+</section>

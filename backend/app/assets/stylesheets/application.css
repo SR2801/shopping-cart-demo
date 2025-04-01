@@ -1,0 +1,85 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+
+ body{
+    font-family: Arial, Helvetiva, sans-serif;
+    padding: 1rem;
+    background-color: yellow
+}
+
+nav{
+    /* justify-content: flex-end; */
+    display: flex; 
+    font-size: 0.9em;
+    /* max-width: 1024px; */
+    margin: 0 auto;
+    padding: 1rem;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 150px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+main {
+    /* max-width: 1024px; */
+    margin: 0 auto;
+}
+
+
+section.item {
+    display: flex; 
+    justify-content: space-between; 
+    gap: 1rem; 
+    flex-wrap: wrap;
+  }
+  
+img {
+    /* border-radius: 8px; */
+    height: 60%;
+    width: auto;
+    /* /* flex-basis: 50%; */
+    max-width: 80%; 
+    filter: invert(0%);
+}
+
+/* Header */
+header {
+    /* padding: 10em 0; */
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    flex-direction: column;
+    margin: 50px;
+}
+.logo{
+    height: 200px;
+    width: auto;
+    /* flex-basis: 30%; */
+    margin: 50px;
+
+}
+
+.header{
+    background-color: #333;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}

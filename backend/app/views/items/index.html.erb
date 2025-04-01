@@ -1,0 +1,39 @@
+<h2 style="text-align: center;">Featured Products</h2>
+<section class="item">
+        <% @items.each do |item| %>
+          <a href="<%= item_path(item) %>">
+            <div style="background-color: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); width: 30%;">
+            <% if item && item.featured_image.attached? %>
+                <%= image_tag item.featured_image, alt: item.name%>
+            <% end %>
+
+            <h3><%= item.name %></h3>
+            <p>$<%= item.price %></p>
+            <p>Rating: <%= item.rating || 0 %></p>
+            <p>Available stock: <%= item.inventory_count || 0 %></p>
+
+            <a href="<%= item_path(item) %>" style="padding: 10px; background-color: #FF5722; color: white; text-decoration: none;">View Details</a>
+          </div>
+          </a>
+        <% end %>
+    </section>
+
+
+<!--
+<ul>
+    <%# <%= debug @items%> 
+<% cache @items do%>
+<% @items.each do |item|%>
+    <div>
+        <li>
+        <div style= "display: flex; flex-direction: column; gap: 30 px; margin: 40 px;">
+            <div><%= link_to item.name, item%> </div>
+            <div class="price"> $<%= item.price%> </div>
+            <div class="stock"><%= item.inventory_count || 0 %> </div>
+        </div>
+        </li>
+    </div>
+<%end%>
+<%end%>
+</ul>
+-->

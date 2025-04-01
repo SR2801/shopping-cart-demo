@@ -1,0 +1,12 @@
+<% if item.inventory_count? %>
+    <p><%= item.inventory_count %>  in stock </p>
+    <%= button_to "Buy Now", item, method: :buy_now%>
+    <%= button_to "Add to cart", item, method: :add_to_cart%>
+<% else %>
+    <p> Out of Stock :( </p>
+    <p> Subscribe to receive notification when Available </p>
+    <%= form_with model: [item, Subscriber.new] do |form| %>
+        <%= form.email_field :email, placeholder: "you@example.com" , required: true %>
+        <%= form.submit "Subscribe" %>
+    <%end%>
+<% end %>

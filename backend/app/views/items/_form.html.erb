@@ -1,0 +1,22 @@
+<%= form_with model: item do |form| %>
+<div style="margin: 40px; display: flex; flex-direction: column; gap: 10px;">
+    <%= form.label :name%>
+    <%= form.text_field :name%>
+    <%= form.label :price%>
+    <%= form.text_field :price%>
+    <%= form.label :inventory_count %>
+    <%= form.text_field :inventory_count%>
+    <%= form.label :description%>
+    <%= form.rich_text_area :description, style: "display: block"%>
+    <%= form.label :featured_image %>
+    <%= form.file_field :featured_image, style: "display: block; width: 400 px", accept: "image/*"%>
+    <%= form.label :rating%>
+    <%= form.text_field :rating%>
+</div>
+<div class="buttons" style="margin: 40px">
+    <%= form.submit %>
+</div>
+<div class="buttons" style="margin: 40px">
+    <%= link_to "Cancel", item %>
+</div>
+<% end %>

@@ -1,0 +1,9 @@
+<h1><%= @item.name%> is back in stock in Shopping App.</h1>
+
+<p>
+  <%= @greeting %>, 
+  <h1>Good news!</h1>
+  <p><%= link_to @item.name, item_url(@item) %> is back in stock.</p>
+  <%= link_to "Unsubscribe", unsubscribe_url(token: params[:subscriber].generate_token_for(:unsubscribe))%>
+
+</p>
