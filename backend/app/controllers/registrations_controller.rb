@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
     respond_to :json
     skip_before_action :authenticate_with_token!
+    
     def new
       sign_up_params = params[:user]
       email = sign_up_params[:email]

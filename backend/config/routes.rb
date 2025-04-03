@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     registrations: 'registrations'
   }
 
+
   resources :items, only: %i[index show]do
     post 'add_to_cart', to: 'items#add_to_cart'
   end

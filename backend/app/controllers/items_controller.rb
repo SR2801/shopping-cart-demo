@@ -47,6 +47,7 @@ class ItemsController < ApplicationController
     @cart_item = @cart.cart_items.find_by(item_id: @item.id)
     if @cart_item.nil?
       @cart_item = @cart.cart_items.create(item_id: @item.id) 
+      @cart_item.subtotal = @cart_item.item_count * @item.price
       @cart_item.increment!(:item_count)
       render json: { message: 'Item added to cart', item: @cart_item }, status: :created
     else
@@ -77,13 +78,11 @@ class ItemsController < ApplicationController
 
   def get_cart
     # @cart = Cart.find_or_create_by(id: 6)
-    puts "###########################################################Current user: #{current_user.id}, cart_id : #{current_user.carts}"
+    puts "$Current user: #{current_user.id}, cart_id : #{current_user.carts}"
     @cart = current_user.carts
 
     if @cart.nil?
       render json: { error: "Cart not found for user_id: #{current_user.id}" }, status: :not_found 
-    else
-      puts "#######{@cart}"
     end
   end
 end

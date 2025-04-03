@@ -10,37 +10,26 @@ class CartItemsController < ApplicationController
 
   def show
   end
-  # def add_to_cart
-  #     if @cart_item.nil?
-  #       @cart_item = @cart.cart_items.create(item_id: @item.id)  # Find or create the cart item
-  #     end
-  #     # Increment the item count
-  #     @cart_item.increment!(:item_count)
-
-
-  #   render json: { message: 'Item added to cart', item: @cart_item }, status: :created
-  # end
-
-  # curl -X POST -H "Content-Type: application/json" -dATCH -H "Content-Type: application/json"   -d '{"item_id": 10, "op": "1"}'   http://localhost:3000/cart_items/1/update
 
   def update
     case params[:op]
     when '+'
       @cart_item.increment!(:item_count)
+
     when '-'
       if @cart_item.item_count > 1
         @cart_item.decrement!(:item_count)
       else
         @cart_item.destroy
       end
-    # else
-    #   # If op is a number (and positive), set item_count to the number provided
+    else
+      # If op is a number (and positive), set item_count to the number provided
     #   if params[:op].to_i > 0
     #     @cart_item.update!(item_count: params[:op].to_i)
     #   else
     #     render json: { error: 'item_count must be a positive integer' }, status: :unprocessable_entity
     #     return
-      # end
+    #   end
     end
     render json: { data: @cart_item }, status: :ok
   end
@@ -58,8 +47,6 @@ class CartItemsController < ApplicationController
     @cart = Cart.find(params[:cart_id])
     if @cart.nil?
       render json: { error: 'Cart not found' }, status: :not_found 
-    else
-      puts "#######{@cart}"
     end
   end
 

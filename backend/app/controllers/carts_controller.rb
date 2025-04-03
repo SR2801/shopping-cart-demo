@@ -11,6 +11,7 @@ class CartsController < ApplicationController
   def show
     item_info = @cart.cart_items.map do |cart_item|
       item = Item.find(cart_item.item_id)
+      cart_item.subtotal = cart_item.item_count * item.price
       {
         id: cart_item.id,
         item: {
@@ -18,7 +19,8 @@ class CartsController < ApplicationController
           name: item.name,
           price: item.price
         },
-        item_count: cart_item.item_count
+        item_count: cart_item.item_count,
+        sub_total: cart_item.subtotal
       }
     end
   
@@ -42,13 +44,11 @@ class CartsController < ApplicationController
 
   # Find the cart by its ID
   def get_cart
-    # @cart = Cart.find_by(id: params[:id])
-    puts "params are: #{params}"
     cart_id =  current_user.carts.id
-    # @cart = Cart.find_by(id: params[:id] || 6)
-    puts "#{current_user.carts}: current user"
-    @cart = Cart.find_or_create_by(id: cart_id)
-    puts "Cart found? : #{params[:id] }? Cart Id: #{cart_id}"
+    @cart = Cart.find_by(id: cart_id)
+    if @cart.nil?
+      @cart = Cart.create(id: cart_id)
+    end
     render json: { error: 'Cart not found' }, status: :not_found if @cart.nil?
   end
 end

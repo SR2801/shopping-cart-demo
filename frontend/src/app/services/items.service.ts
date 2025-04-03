@@ -26,27 +26,11 @@ export class ItemService {
     return this.http.get<{ data: Item }>(`${this.apiUrl}/items/${id}`,{ headers: this.authService.getHeaderToken() });
   }
 
-  // addToCart(itemId: number, cartId: number): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/items/${itemId}/add_to_cart`, { headers: this.authService.getHeaderToken() }  );
-  // }
 
   addToCart(itemId: number): Observable<any> {
     const headers = this.authService.getHeaderToken();
     return this.http.post(`${this.apiUrl}/items/${itemId}/add_to_cart`, {}, { headers }); 
   }
-  
-
-  // addToCart(itemId: number, cartId: number): Observable<any> {
-  //   return this.getHeaderToken().pipe(
-  //     switchMap((headers: HttpHeaders) => {
-  //       if (headers) {
-  //         return this.http.post(`${this.apiUrl}/items/${itemId}/add_to_cart`,  { headers: this.authService.getHeaderToken() });
-  //       } else {
-  //         return of(null); // Or throw an error, or return an observable of an error
-  //       }
-  //     })
-  //   );
-  // }
 
   getHeaderToken(): Observable<HttpHeaders> {
     const token = this.authService.getAuthToken();

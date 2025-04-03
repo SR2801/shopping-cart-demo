@@ -44,6 +44,7 @@
         <button (click)="updateItem(cartItem, '+')">+</button>
         <button (click)="updateItem(cartItem, '-')">-</button>
         <button (click)="removeItem(cartItem)">Remove</button>
+        <p class="subtotal">Subtotal: {{ cartItem.sub_total }}</p>
       </div>
     </div>
     <div class="total">

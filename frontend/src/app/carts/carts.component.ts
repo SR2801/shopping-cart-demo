@@ -3,11 +3,12 @@ import { CartsService, CartItem } from '../services/carts.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './carts.component.html',
-  imports: [CommonModule], 
+  imports: [CommonModule, FormsModule], 
   styleUrls: ['./carts.component.css']
 })
 export class CartComponent implements OnInit {
