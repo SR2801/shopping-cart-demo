@@ -12,7 +12,7 @@
         name="email"
         #email="ngModel"
       />
-      <div ngIf="email.invalid && email.touched" class="error">
+      <div *ngIf="email.invalid && email.touched" class="error">
         Email is required.
       </div>
     </div>
@@ -28,7 +28,7 @@
         name="password"
         #password="ngModel"
       />
-      <div ngIf="password.invalid && password.touched" class="error">
+      <div *ngIf="password.invalid && password.touched" class="error">
         Password is required.
       </div>
     </div>
@@ -44,7 +44,7 @@
         name="passwordConfirmation"
         #passwordConfirmation="ngModel"
       />
-      <div ngIf="passwordConfirmation.invalid && passwordConfirmation.touched" class="error">
+      <div *ngIf="passwordConfirmation.invalid && passwordConfirmation.touched" class="error">
         Password confirmation is required.
       </div>
     </div>
@@ -54,7 +54,12 @@
     </button>
   </form>
 
-  <div ngIf="errorMessage" class="error-message">
+  <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!errorMessage && isSuccessful">
+    <h3> Registration successful!</h3>
+    <h5> Click <a routerLink="/login">here</a> to Login</h5>
   </div>
 </div>

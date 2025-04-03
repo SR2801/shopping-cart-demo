@@ -32,7 +32,7 @@ import { isPlatformBrowser, Location } from "@angular/common";
   login(email: string, password: string) {
     console.log("Credentials: ",email, password);
     this.credentials = {email: email, password: password}
-    return this.http.post('http://localhost:3000/users/sign_in', this.credentials).pipe(
+    return this.http.post(`${this.baseUrl}/users/sign_in`, this.credentials).pipe(
       map((response: any) => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
@@ -59,7 +59,8 @@ import { isPlatformBrowser, Location } from "@angular/common";
   }
   
     register(user:any): Observable<any> {
-        return this.http.post<any>(`${this.baseUrl}/users`, { user: user });
+      console.log("Register POST call: ", user);
+        return this.http.post<any>(`${this.baseUrl}/users`, { user });
       }
     
     logout() {

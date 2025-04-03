@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_with_token!
+  before_action :authenticate_with_token!, only: %i[show destroy]
   before_action :get_cart, only: %i[show destroy]
 
   def index

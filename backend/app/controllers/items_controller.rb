@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  include Authentication
+  # include Authentication
   # allow_unauthenticated_access
   before_action :authenticate_with_token!, only: %i[add_to_cart]
 

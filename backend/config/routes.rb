@@ -2,9 +2,9 @@
 Rails.application.routes.draw do
   # devise_for :users
   devise_for :users,  defaults: { format: :json }, controllers: {
-    sessions: 'sessions'
+    sessions: 'sessions',
+    registrations: 'registrations'
   }
-
 
   resources :items, only: %i[index show]do
     post 'add_to_cart', to: 'items#add_to_cart'
