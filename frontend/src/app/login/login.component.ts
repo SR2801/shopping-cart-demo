@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+onRegister() {
+  this.router.navigate(['/register']);
+}
 navigateToCarts() {
   this.router.navigate(['/carts'])
 }

@@ -5,10 +5,10 @@ import { AuthService } from './auth.service';
 
 export interface CartItem {
   id: number;
-  item_id: number;
   item_count: number;
   // Optionally, if you have an item object:
   item: {
+    id: number;
     name: string;
     price: number;
     // any other properties you need

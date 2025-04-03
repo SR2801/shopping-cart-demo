@@ -35,7 +35,7 @@
     </div>
     <div class="cart-item" *ngFor="let cartItem of cartItems">
       <div class="item-info">
-        <h3>Product ID: {{ cartItem.item_id }}</h3>
+        <h3>Product ID: {{ cartItem.item.id }}</h3>
         <h3>{{ cartItem.item.name }}</h3>
         <p>Price: ${{ cartItem.item.price }}</p>
         <p>Quantity: {{ cartItem.item_count }}</p>
