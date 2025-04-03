@@ -1,6 +1,6 @@
 class CartItemsController < ApplicationController
-  include Authentication
-  allow_unauthenticated_access
+  # include Authentication
+  before_action :authenticate_with_token!
   # before_action :get_item, only: %i[add_to_cart]
   # before_action :get_cart, only: %i[show add_to_cart]
   before_action :get_cart_item, only: %i[update remove]
@@ -65,7 +65,8 @@ class CartItemsController < ApplicationController
 
   # Find the cart item by its ID
   def get_cart_item
-    @cart_item = CartItem.find_by(id: params[:id], cart_id: params[:cart_id])
+    puts "##########Params: #{params}"
+    @cart_item = CartItem.find_by(id: params[:id], cart_id: current_user.carts.id)
     render json: {
       error: 'Cart Item not found'
     }, status: :not_found if @cart_item.nil?

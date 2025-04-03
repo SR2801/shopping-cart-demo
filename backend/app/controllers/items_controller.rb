@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
+  include Authentication
   # allow_unauthenticated_access
+  before_action :authenticate_with_token!, only: %i[add_to_cart]
 
   before_action :get_item, only: %i[show update destroy]
   before_action :get_item_for_cart, only: %i[add_to_cart]
@@ -42,7 +44,7 @@ class ItemsController < ApplicationController
   end
 
   def add_to_cart
-    @cart_item = @cart.cart_items.find_or_create_by(item_id: @item.id, cart_id: 6)  # Find or create the cart item
+    @cart_item = @cart.cart_items.find_or_create_by(item_id: @item.id)  # Find or create the cart item
     # Increment the item count
     @cart_item.increment!(:item_count)
     render json: { message: 'Item added to cart', item: @cart_item }, status: :created
@@ -56,21 +58,26 @@ class ItemsController < ApplicationController
   end
 
   # Find the item by its ID
+  
   def get_item
-    puts "#################################################Id: #{params}"
-    @item = Item.find_by(id: params[:id])
+    # id = (params.get(:item_id).nil?)?params[:id] : params[:item_id]
+    # puts "#################################################Id: #{id} Param: #{params}"
+    @item = Item.find_by(id: params[:id] )
     render json: { error: 'Item not found' }, status: :not_found if @item.nil?
   end
   def get_item_for_cart
   puts "#################################################Id: #{params}"
   @item = Item.find_by(id: params[:item_id])
   render json: { error: 'Item not found' }, status: :not_found if @item.nil?
-end
+  end
 
   def get_cart
-    @cart = Cart.find_or_create_by(id: 6)
+    # @cart = Cart.find_or_create_by(id: 6)
+    puts "###########################################################Current user: #{current_user.id}, cart_id : #{current_user.carts}"
+    @cart = current_user.carts
+
     if @cart.nil?
-      render json: { error: 'Cart not found' }, status: :not_found 
+      render json: { error: "Cart not found for user_id: #{current_user.id}" }, status: :not_found 
     else
       puts "#######{@cart}"
     end

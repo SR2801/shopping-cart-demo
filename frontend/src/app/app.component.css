@@ -5,6 +5,11 @@
     padding: 20px;
   }
   
+
+  nav{
+    display: flex;
+    justify-content: space-around;
+  }
   /* Styling for navigation links */
   nav ul {
     list-style-type: none;

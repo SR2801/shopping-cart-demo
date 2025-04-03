@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartsService, CartItem } from '../services/carts.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,10 +13,14 @@ import { CommonModule } from '@angular/common';
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   error: string = '';
+  isAuthenticated: boolean = false;
 
-  constructor(private cartService: CartsService) { }
+
+  constructor(private cartService: CartsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
+    console.log(`Authnitcated????????????? ${this.isAuthenticated}`)
     this.loadCart();
   }
 
@@ -37,6 +43,16 @@ export class CartComponent implements OnInit {
       next: () => this.loadCart(),
       error: (_err) => this.error = 'Could not remove item'
     });
+  }
+
+
+
+  redirectToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  redirectToSignup() {
+    this.router.navigate(['/register']);
   }
 
   // Calculate total price if items include a price property

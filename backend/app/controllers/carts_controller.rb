@@ -1,8 +1,9 @@
 class CartsController < ApplicationController
-
+  before_action :authenticate_with_token!
   before_action :get_cart, only: %i[show destroy]
 
   def index
+    puts params
     @carts = Cart.all
     render json: {data: @carts}, status: :ok
   end
@@ -42,8 +43,12 @@ class CartsController < ApplicationController
   # Find the cart by its ID
   def get_cart
     # @cart = Cart.find_by(id: params[:id])
-    @cart = Cart.find_by(id: 6)
-    puts @cart
+    puts "params are: #{params}"
+    cart_id =  current_user.carts.id
+    # @cart = Cart.find_by(id: params[:id] || 6)
+    puts "#{current_user.carts}: current user"
+    @cart = Cart.find_or_create_by(id: cart_id)
+    puts "Cart found? : #{params[:id] }? Cart Id: #{cart_id}"
     render json: { error: 'Cart not found' }, status: :not_found if @cart.nil?
   end
 end

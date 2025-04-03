@@ -8,6 +8,9 @@ class ApplicationController < ActionController::API
   #   locale = params[:locale] || I18n.default_locale
   #   I18n.with_locale(locale, &action)
   # end
+  include ActionController::Flash
+  include Authentication
+  # before_action :authenticate_with_token!
 
   def status
     render json: { data:'ok' }

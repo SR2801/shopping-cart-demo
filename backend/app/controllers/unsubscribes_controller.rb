@@ -4,7 +4,6 @@ class UnsubscribesController < ApplicationController
 
   def show
     @subscriber&.destroy
-    flash[:notice] = "You have successfully unsubscribed."
     redirect_to root_path, notice: "Unsubscribed successfully!"
   end
 

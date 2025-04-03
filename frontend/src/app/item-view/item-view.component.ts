@@ -31,7 +31,7 @@ export class ItemViewComponent implements OnInit {
   }
 
   addToCart() {
-    this.itemService.addToCart(this.item.id, 1).subscribe({
+    this.itemService.addToCart(this.item.id).subscribe({
       next: (res) => this.success = 'Item added to cart!',
       error: (err) => this.error = 'Failed to add item to cart'
     });
