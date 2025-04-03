@@ -44,10 +44,14 @@ class ItemsController < ApplicationController
   end
 
   def add_to_cart
-    @cart_item = @cart.cart_items.find_or_create_by(item_id: @item.id)  # Find or create the cart item
-    # Increment the item count
-    @cart_item.increment!(:item_count)
-    render json: { message: 'Item added to cart', item: @cart_item }, status: :created
+    @cart_item = @cart.cart_items.find_by(item_id: @item.id)
+    if @cart_item.nil?
+      @cart_item = @cart.cart_items.create(item_id: @item.id) 
+      @cart_item.increment!(:item_count)
+      render json: { message: 'Item added to cart', item: @cart_item }, status: :created
+    else
+      render json: { message: 'Item already added to cart', item: @cart_item }, status: :created
+    end
   end
 
   private
