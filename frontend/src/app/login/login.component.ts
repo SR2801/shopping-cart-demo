@@ -32,6 +32,7 @@ navigateToCarts() {
         this.router.navigate(['/carts']);  // Navigate to the cart page after successful login
       },
       (error: any) => {
+        this.error = (JSON.stringify(error.error.error)).slice(1, -1);
         console.log('Login failed', error);
       }
     );
