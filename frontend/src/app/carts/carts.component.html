@@ -24,12 +24,18 @@
     <h3>Total: ${{ totalPrice }}</h3>
   </div>
 </div> -->
+<div *ngIf="isAuthenticated === null" class="loading-screen">
+  <div class="loading-spinner"></div>
+  <p>Loading...</p>
+</div>
 
 
-<div *ngIf="isAuthenticated; else cartContent" class="alert alert-warning">
+<div *ngIf="isAuthenticated" >
   <div class="container">
     <h2>Your Cart</h2>
-    <div *ngIf="error" class="error">{{ error }}</div>
+    <div class="error-container">
+      <div *ngIf="error" class="error">{{ error }}</div>
+    </div>
     <div *ngIf="cartItems.length === 0">
       <p>Your cart is empty.</p>
     </div>
@@ -42,8 +48,8 @@
       </div>
       <div class="item-actions">
         <button (click)="updateItem(cartItem, '+')">+</button>
+        <input type="text" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
         <button (click)="updateItem(cartItem, '-')">-</button>
-        <input class="item-count" type="number" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
         <button (click)="removeItem(cartItem)">Remove</button>
         <p class="subtotal">Subtotal: {{ cartItem.sub_total }}</p>
       </div>
@@ -51,11 +57,21 @@
     <div class="total">
       <h3>Total: ${{ totalPrice }}</h3>
     </div>
+    <div>
+      <button class="buy">Buy now</button>
+    </div>
   </div>
 </div>
 
-<ng-template #cartContent>
+
+<div *ngIf="isAuthenticated===false" >
   <!-- Cart items will be displayed here if the user is authenticated -->
-  <h2>Your Cart</h2>
-  <p>Display cart items here...</p>
-</ng-template>
+   <div class = "container">
+    
+  <h2>Please login or Sign up!</h2>
+  <div class="item-actions">
+    <button (click)="redirectToLogin()">Login</button>
+    <button (click)="redirectToSignup()">Sign Up</button>
+  </div>
+  </div>
+</div>

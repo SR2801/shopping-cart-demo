@@ -15,14 +15,6 @@ import { isPlatformBrowser, Location } from "@angular/common";
   
     constructor(private http: HttpClient, private router: Router, private location: Location, @Inject(PLATFORM_ID) private platformId: Object) {}
   
-    // login(email: string, password: string) { 
-    //     return this.http.post(`${this.baseUrl}/users/sign_in`, { user: { email, password } })
-    //     .pipe(
-    //         tap((res:any) => {
-    //             localStorage.setItem(this.tokenKey, res.token);
-    //         })
-    //     )
-    // }
 
 
   storePreviousUrl() {
@@ -85,9 +77,9 @@ import { isPlatformBrowser, Location } from "@angular/common";
           console.error('No token found in localStorage!');
           return new HttpHeaders(); // Return an empty headers object to avoid errors
         }
-        console.log(`token fetched: ${token}`)
+        // console.log(`token fetched: ${token}`)
         
-        console.log(`#######################################################\nHeader token fetched: ${token}`)
+        // console.log(`#######################################################\nHeader token fetched: ${token}`)
         return new HttpHeaders().set('Authorization', `Bearer ${token}`);
       }
       

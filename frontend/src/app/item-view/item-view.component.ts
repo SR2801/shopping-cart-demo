@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item, ItemService } from '../services/items.service';
-import { CartsService } from '../services/carts.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,8 +17,7 @@ export class ItemViewComponent implements OnInit {
   // For now, we use a fixed cart id inside the service.
   constructor(
     private route: ActivatedRoute,
-    private itemService: ItemService,
-    private cartService: CartsService
+    private itemService: ItemService
   ) { }
 
   ngOnInit(): void {

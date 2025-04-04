@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartsService, CartItem } from '../services/carts.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormsModule, NgModel } from '@angular/forms';
 
@@ -14,14 +14,15 @@ import { FormsModule, NgModel } from '@angular/forms';
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   error: string = '';
-  isAuthenticated: boolean = false;
+  isAuthenticated: Boolean | null= null;
+  digit: string = '';
 
 
   constructor(private cartService: CartsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
-    console.log(`Authnitcated????????????? ${this.isAuthenticated}`)
+    console.log(`Authenitcated????????????? ${this.isAuthenticated}`)
     this.loadCart();
   }
 
@@ -34,7 +35,10 @@ export class CartComponent implements OnInit {
 
   updateItem(cartItem: CartItem, op: string) {
     this.cartService.updateCartItem(cartItem.id, op).subscribe({
-      next: () => this.loadCart(),
+      next: () => { 
+        this.loadCart(); 
+        this.error = "";
+      },
       error: (_err) => this.error = 'Could not update item'
     });
   }
@@ -45,7 +49,17 @@ export class CartComponent implements OnInit {
       error: (_err) => this.error = 'Could not remove item'
     });
   }
+  onDigitInput(event: any) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
 
+    if (/^\d$/.test(value)) {
+      this.digit = value; // Valid digit
+    } else {
+      this.digit = ''; // Invalid, clear the input
+      input.value = ''; // Clear the displayed value.
+    }
+  }
 
 
   redirectToLogin() {

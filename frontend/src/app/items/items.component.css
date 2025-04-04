@@ -10,7 +10,10 @@
   }
   
   .item-card:hover {
-    background-color: #f9f9f9;
+    background-color: black;
+    box-shadow:   5px 5px gray;
+    color: white;
+    font-size: 22px;
   }
   
   .error {

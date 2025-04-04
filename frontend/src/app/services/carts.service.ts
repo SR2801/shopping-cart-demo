@@ -26,7 +26,7 @@ export class CartsService {
 //add cart details
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  private cartId:number = 6;
+  private cartId:number = 0;
   // Get the cart
   // getCart(cartId: number): Observable<any> {
     // // return this.http.get<any>(`${this.apiUrl}/${cartId}`);
@@ -37,9 +37,9 @@ export class CartsService {
   //   'Authorization': `Bearer ${localStorage['token']}`, // Use the token in the Authorization header
   //   'Content-Type': 'application/json' // Add Content-Type if needed
   // });
-  isAuthenticated(): boolean{
-    return this.authService.isAuthenticated()
-  }
+  // isAuthenticated(): boolean{
+  //   return this.authService.isAuthenticated()
+  // }
   getCartItems(): Observable<{ data: CartItem[] }> {
     return this.http.get<{ data: CartItem[] }>(`${this.apiUrl}/`,  { headers: this.authService.getHeaderToken() });
   }
@@ -55,5 +55,4 @@ export class CartsService {
     return this.http.delete<any>(`${this.apiUrl}`, { headers: this.authService.getHeaderToken() });
   }
 
-    // Get the authentication token
 }

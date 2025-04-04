@@ -1,6 +1,4 @@
 class ItemsController < ApplicationController
-  # include Authentication
-  # allow_unauthenticated_access
   before_action :authenticate_with_token!, only: %i[add_to_cart]
 
   before_action :get_item, only: %i[show update destroy]
