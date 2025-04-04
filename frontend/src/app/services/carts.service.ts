@@ -45,11 +45,11 @@ export class CartsService {
   }
 
   updateCartItem(cartItemId: number, op: string): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/${this.cartId}/cart_items/${cartItemId}/update`, { op: op },{ headers: this.authService.getHeaderToken() });
+    return this.http.patch(`${this.apiUrl}/${cartItemId}/update`, { op: op },{ headers: this.authService.getHeaderToken() });
   }
 
   removeCartItem(cartItemId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${this.cartId}/cart_items/${cartItemId}/remove`, {headers: this.authService.getHeaderToken() });
+    return this.http.delete(`${this.apiUrl}/${cartItemId}/remove`, {headers: this.authService.getHeaderToken() });
   }
   deleteCart(cartId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}`, { headers: this.authService.getHeaderToken() });

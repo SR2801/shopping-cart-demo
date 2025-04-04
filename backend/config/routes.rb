@@ -13,12 +13,12 @@ Rails.application.routes.draw do
   root to: "items#index"
 
 
-  resources :carts, only: %i[show destroy] do
-    resources :cart_items, only: [] do
+  resources :carts, only: %i[index destroy] do
+    # resources :cart_items, only: [] do
         patch 'update', on: :member  # Increment or decrement item count
         delete 'remove', on: :member  # Remove item from the cart
-    end
+    # end
   end
-  get 'carts/', to: 'carts#show'
+  get 'carts/', to: 'carts#index'
     
 end
