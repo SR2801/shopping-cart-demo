@@ -24,13 +24,15 @@ class CartItemsController < ApplicationController
       end
     else
       # If op is a number (and positive), set item_count to the number provided
-    #   if params[:op].to_i > 0
-    #     @cart_item.update!(item_count: params[:op].to_i)
-    #   else
-    #     render json: { error: 'item_count must be a positive integer' }, status: :unprocessable_entity
-    #     return
-    #   end
+      if params[:op].to_i > 0
+        @cart_item.update!(item_count: params[:op].to_i)
+      else
+        render json: { error: 'item_count must be a positive integer' }, status: :unprocessable_entity
+        return
+      end
     end
+
+    @cart_item.subtotal = @cart_item.item_count * Item.find(@cart_item.item_id).price
     render json: { data: @cart_item }, status: :ok
   end
 

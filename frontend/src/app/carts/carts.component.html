@@ -43,6 +43,7 @@
       <div class="item-actions">
         <button (click)="updateItem(cartItem, '+')">+</button>
         <button (click)="updateItem(cartItem, '-')">-</button>
+        <input class="item-count" type="number" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
         <button (click)="removeItem(cartItem)">Remove</button>
         <p class="subtotal">Subtotal: {{ cartItem.sub_total }}</p>
       </div>

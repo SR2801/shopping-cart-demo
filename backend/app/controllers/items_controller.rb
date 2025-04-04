@@ -65,15 +65,13 @@ class ItemsController < ApplicationController
   # Find the item by its ID
   
   def get_item
-    # id = (params.get(:item_id).nil?)?params[:id] : params[:item_id]
-    # puts "#################################################Id: #{id} Param: #{params}"
     @item = Item.find_by(id: params[:id] )
     render json: { error: 'Item not found' }, status: :not_found if @item.nil?
   end
+  
   def get_item_for_cart
-  puts "#################################################Id: #{params}"
-  @item = Item.find_by(id: params[:item_id])
-  render json: { error: 'Item not found' }, status: :not_found if @item.nil?
+    @item = Item.find_by(id: params[:item_id])
+    render json: { error: 'Item not found' }, status: :not_found if @item.nil?
   end
 
   def get_cart
