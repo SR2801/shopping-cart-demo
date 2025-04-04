@@ -1,12 +1,13 @@
 class CartsController < ApplicationController
   before_action :authenticate_with_token!, only: %i[index destroy]
-  before_action :get_cart, only: %i[index destroy]
+  before_action :get_cart, only: %i[index destroy update remove]
   before_action :get_cart_item, only: %i[update remove]
 
 
   def index
     item_info = @cart.cart_items.map do |cart_item|
       item = Item.find(cart_item.item_id)
+      # item = cart_item.item
       cart_item.subtotal = cart_item.item_count * item.price
       {
         id: cart_item.id,
@@ -15,8 +16,7 @@ class CartsController < ApplicationController
           name: item.name,
           price: item.price
         },
-        item_count: cart_item.item_count,
-        sub_total: cart_item.subtotal
+        item_count: cart_item.item_count
       }
     end
   
@@ -42,7 +42,6 @@ class CartsController < ApplicationController
         @cart_item.destroy
       end
     else
-      # If op is a number (and positive), set item_count to the number provided
       if params[:op].to_i > 0
         @cart_item.update!(item_count: params[:op].to_i)
       else
@@ -51,11 +50,10 @@ class CartsController < ApplicationController
       end
     end
 
-    @cart_item.subtotal = @cart_item.item_count * Item.find(@cart_item.item_id).price
+    # @cart_item.subtotal = @cart_item.item_count * Item.find(@cart_item.item_id).price
     render json: { data: @cart_item }, status: :ok
   end
 
-  # DELETE /carts/:cart_id/cart_items/:id/remove_item
   def remove
     @cart_item.destroy
     head :no_content
@@ -64,18 +62,13 @@ class CartsController < ApplicationController
 
   private
 
-  # Find the cart by its ID
   def get_cart
-    cart_id =  current_user.carts.id
-    @cart = Cart.find_by(id: cart_id)
-    if @cart.nil?
-      @cart = Cart.create(id: cart_id)
-    end
+    @cart = current_user.carts
     render json: { error: 'Cart not found' }, status: :not_found if @cart.nil?
   end
 
   def get_cart_item
-    @cart_item = CartItem.find_by(id: params[:id], cart_id: current_user.carts.id)
+    @cart_item = @cart.cart_items.find_by(id: params[:id])
     render json: {
       error: 'Cart Item not found'
     }, status: :not_found if @cart_item.nil?
