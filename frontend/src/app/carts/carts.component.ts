@@ -16,13 +16,14 @@ export class CartComponent implements OnInit {
   error: string = '';
   isAuthenticated: Boolean | null= null;
   digit: string = '';
+  subTotals: any = {};
 
 
   constructor(private cartService: CartsService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
-    console.log(`Authenitcated????????????? ${this.isAuthenticated}`)
+    // console.log(`Authenitcated????????????? ${this.isAuthenticated}`)
     this.loadCart();
   }
 
@@ -41,6 +42,7 @@ export class CartComponent implements OnInit {
       },
       error: (_err) => this.error = 'Could not update item'
     });
+    this.subTotals[cartItem.id] = this.subTotalPrice(cartItem);
   }
 
   removeItem(cartItem: CartItem) {
@@ -49,18 +51,11 @@ export class CartComponent implements OnInit {
       error: (_err) => this.error = 'Could not remove item'
     });
   }
-  onDigitInput(event: any) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
 
-    if (/^\d$/.test(value)) {
-      this.digit = value; // Valid digit
-    } else {
-      this.digit = ''; // Invalid, clear the input
-      input.value = ''; // Clear the displayed value.
-    }
+  deleteCart() {
+    console.log("Deleting cart")
+    this.cartService.deleteCart();
   }
-
 
   redirectToLogin() {
     this.router.navigate(['/login']);
@@ -71,6 +66,10 @@ export class CartComponent implements OnInit {
   }
 
   // Calculate total price if items include a price property
+
+  subTotalPrice(cartItem: CartItem) {
+    return cartItem.item_count * cartItem.item.price;
+  }
   get totalPrice(): number {
     return this.cartItems.reduce((total, ci) => total + (ci.item.price || 0) * ci.item_count, 0);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item, ItemService } from '../services/items.service';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 export class ItemsComponent implements OnInit {
   items: Item[] = [];
   error: string = '';
+  alert: string = '';
+  alert_id: number = 0;
 
   constructor(private itemService: ItemService, private router: Router) { }
 
@@ -24,5 +26,15 @@ export class ItemsComponent implements OnInit {
 
   viewItem(item: Item) {
     this.router.navigate(['/items', item.id]);
+  }
+
+  addToCart(itemId: number) {
+    this.itemService.addToCart(itemId).subscribe({
+      next: (res) => {
+        this.alert = res.message;
+        this.alert_id = res.item.item_id;
+      },
+      error: (err) => this.alert = JSON.stringify(err.error.error).slice(1, -1)
+    });
   }
 }

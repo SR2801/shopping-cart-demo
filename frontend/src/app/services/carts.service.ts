@@ -51,7 +51,7 @@ export class CartsService {
   removeCartItem(cartItemId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${cartItemId}/remove`, {headers: this.authService.getHeaderToken() });
   }
-  deleteCart(cartId: number): Observable<any> {
+  deleteCart(): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}`, { headers: this.authService.getHeaderToken() });
   }
 
