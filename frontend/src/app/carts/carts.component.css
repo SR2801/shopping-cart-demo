@@ -1,6 +1,5 @@
 .container {
     padding: 1rem;
-    display: grid
   }
 
   .error-container {
@@ -17,18 +16,19 @@
   }
 
   .cart-item:hover {
-    border: 3px solid #b3a7a7dd;
+    /* border: 3px solid #b3a7a7dd; */
     background-color: beige;
     box-shadow: 5px 5px  grey;
   }
 
   .item-actions {
-    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.2rem;
     padding: 0.3rem 0.8rem;
     border: none;
     color: white;
     cursor: pointer;
-    justify-content: center;
+    text-align: center;
 
   }
   
@@ -36,27 +36,34 @@
     background-color: #007acc;
     color: white;
     cursor: pointer;
+    font-size: 20px;
 
-    border: inherit; /* inherit border from parent, or set to none */
-    padding: inherit; /* inherit padding from parent, or set to a specific value*/
-    margin: inherit; /* inherit margin from parent, or set to 0 if needed*/
+    border: inherit;
+    padding: inherit;
+    margin: inherit; 
   }
+
+  /* .item-actions-remove{
+    margin-left: 1rem;
+    width: 75%;
+  } */
 
   .item-actions input{
     text-align: center;
     background-color: #a3712f;
-    max-width: 50px;
+    max-width: 30px;
 
     border: inherit; /* inherit border from parent, or set to none */
     padding: inherit; /* inherit padding from parent, or set to a specific value*/
     margin: inherit; /* inherit margin from parent, or set to 0 if needed*/
     color: inherit;
   }
+
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    -webkit-appearance: none;
+    margin: 0;
+  }
   
   .item-actions button:hover {
     background-color: #005fa3;
@@ -71,6 +78,7 @@
   .subtotal {
     text-align: center;
     font-size: 1.5rem;
+    font-weight: bold;
     margin-top: 1rem;
     color: black;
     font-family: 'Times New Roman', Times, serif;
@@ -86,6 +94,12 @@
     color: white;
     cursor: pointer;
     padding: 1em;
-    border: none;
-    width: 7%;
+    margin: 20px;
+    width: 100%;
+    position: sticky;
+  }
+  .total button:hover{
+    background-color: red;
+    box-shadow: 5px 5px gray;
+    font-weight: bolder;
   }

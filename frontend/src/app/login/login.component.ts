@@ -29,13 +29,28 @@ navigateToCarts() {
       (response: any) => {
         // Assuming you handle the JWT token and user login here
         console.log('Login successful', response);
-        this.router.navigate(['/carts']);  // Navigate to the cart page after successful login
+        this.router.navigate(['/']);  // Navigate to the cart page after successful login
       },
       (error: any) => {
-        this.error = (JSON.stringify(error.error.error)).slice(1, -1);
+        this.error = this.getErrorString(error);
         console.log('Login failed', error);
       }
     );
+  }
+
+  private getErrorString(err: any):string {
+    var errorString = "";
+    switch(err.status){
+      case 404:
+        errorString = "User not found, please sign up.";
+        break;
+      case 401:
+        errorString = "Invalid password.";
+        break;
+      default:
+        errorString = "Error logging in.";
+    }
+    return errorString;
   }
 
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 export interface CartItem {
   id: number;
   item_count: number;
-  sub_total: number;
+  subtotal: string;
   // Optionally, if you have an item object:
   item: {
     id: number;
@@ -14,6 +14,11 @@ export interface CartItem {
     price: number;
     // any other properties you need
   };
+}
+
+export interface Cart{
+  cartItems: CartItem[];
+  totalPrice: number;
 }
 
 @Injectable({
@@ -25,8 +30,6 @@ export class CartsService {
   private apiUrl = 'http://localhost:3000/carts';  // Adjust the URL as needed
 //add cart details
   constructor(private http: HttpClient, private authService: AuthService) { }
-
-  private cartId:number = 0;
   // Get the cart
   // getCart(cartId: number): Observable<any> {
     // // return this.http.get<any>(`${this.apiUrl}/${cartId}`);
@@ -40,10 +43,10 @@ export class CartsService {
   // isAuthenticated(): boolean{
   //   return this.authService.isAuthenticated()
   // }
-  getCartItems(): Observable<{ data: CartItem[] }> {
-    return this.http.get<{ data: CartItem[] }>(`${this.apiUrl}/`,  { headers: this.authService.getHeaderToken() });
+  getCartItems(): Observable<{ data: CartItem[]; total_price: number }> {
+    console.log("Fetching from backend");
+    return this.http.get<{ data: CartItem[] ; total_price: number }>(`${this.apiUrl}/`,  { headers: this.authService.getHeaderToken() });
   }
-
   updateCartItem(cartItemId: number, op: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${cartItemId}/update`, { op: op },{ headers: this.authService.getHeaderToken() });
   }
@@ -55,4 +58,7 @@ export class CartsService {
     return this.http.delete<any>(`${this.apiUrl}`, { headers: this.authService.getHeaderToken() });
   }
 
+  isAuthenticated(): boolean{
+    return this.authService.isAuthenticated();
+  }
 }

@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Item, ItemService } from '../services/items.service';
 import { CommonModule } from '@angular/common';
+import { CartComponent } from "../carts/carts.component";
+import { CartSyncService } from '../shared/cart-sync.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-items-list',
   templateUrl: './items.component.html',
-  imports: [CommonModule], 
+  imports: [CommonModule, CartComponent], 
+  standalone: true,
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
@@ -14,14 +18,18 @@ export class ItemsComponent implements OnInit {
   error: string = '';
   alert: string = '';
   alert_id: number = 0;
+  isAuthenticated: boolean = false;
+  showCart: boolean = false;
 
-  constructor(private itemService: ItemService, private router: Router) { }
+  constructor(private itemService: ItemService, private cartSyncService: CartSyncService, private router: Router) { }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe({
-      next: (res: { data: Item[]; }) => this.items = res.data,
-      error: (err: any) => this.error = 'Could not load items'
-    });
+    this.isAuthenticated = this.itemService.isAuthenticated();
+      this.itemService.getItems().subscribe({
+        next: (res: { data: Item[]; }) => this.items = res.data,
+        error: (err: any) => this.error = 'Could not load items'
+      });
+      this.cartSyncService.notifyItemEvent();
   }
 
   viewItem(item: Item) {
@@ -29,12 +37,23 @@ export class ItemsComponent implements OnInit {
   }
 
   addToCart(itemId: number) {
+    if(!this.isAuthenticated){
+      this.alert = "Please login";
+      this.alert_id  = itemId;
+      return;
+    }
     this.itemService.addToCart(itemId).subscribe({
       next: (res) => {
-        this.alert = res.message;
-        this.alert_id = res.item.item_id;
+        this.alert = res.message,
+        this.cartSyncService.notifyItemEvent();
       },
-      error: (err) => this.alert = JSON.stringify(err.error.error).slice(1, -1)
+      error: (err) => this.alert = "Error: " + JSON.stringify(err.error.error).slice(1, -1)
     });
+    this.alert_id = itemId;
+  }
+
+
+  toggleCart() {
+    this.showCart = !this.showCart;
   }
 }

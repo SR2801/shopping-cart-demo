@@ -16,10 +16,14 @@ export interface Item {
 })
 export class ItemService {
   private apiUrl = "http://localhost:3000";
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) {
+    console.log("AuthToken is: ", this.authService.isAuthenticated());}
 
   getItems(): Observable<{ data: Item[] }> {
-    return this.http.get<{ data: Item[] }>(`${this.apiUrl}/items`,{ headers: this.authService.getHeaderToken() });
+    // return this.http.get<{ data: Item[] }>(`${this.apiUrl}/items`,{ headers: this.authService.getHeaderToken() });
+
+  const headers = this.authService.getHeaderToken();
+  return this.http.get<{ data: Item[] }>(`${this.apiUrl}/items`, { headers });
   }
 
   getItem(id: number): Observable<{ data: Item }> {
@@ -43,6 +47,10 @@ export class ItemService {
       return of(headers);
     } 
     return of(new HttpHeaders().set('Failure', "Bearer token not found"));
+  }
+
+  isAuthenticated(): boolean{
+    return this.authService.isAuthenticated();
   }
 
 }

@@ -1,35 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { CartsService, CartItem } from '../services/carts.service';
+import { CartsService, CartItem, Cart } from '../services/carts.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { CartSyncService } from '../shared/cart-sync.service';
 import { FormsModule, NgModel } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './carts.component.html',
-  imports: [CommonModule, FormsModule], 
+  imports: [CommonModule, FormsModule, RouterModule], 
+  standalone: true, 
   styleUrls: ['./carts.component.css']
 })
 export class CartComponent implements OnInit {
+parseFloat(arg0: number) {
+throw new Error('Method not implemented.');
+}
+  private itemComponentEvent!: Subscription;
+  totalPrice: number = 0;
   cartItems: CartItem[] = [];
   error: string = '';
-  isAuthenticated: Boolean | null= null;
+  isAuthenticated: boolean = false;
   digit: string = '';
   subTotals: any = {};
 
 
-  constructor(private cartService: CartsService, private authService: AuthService, private router: Router) { }
-
+  constructor(private cartService: CartsService,  private cartSyncService: CartSyncService, private router: Router) { }
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
-    // console.log(`Authenitcated????????????? ${this.isAuthenticated}`)
+    this.isAuthenticated = this.cartService.isAuthenticated();
+    console.log(`Authenitcated????????????? ${this.isAuthenticated}`);
+      this.itemComponentEvent = this.cartSyncService.itemComponentEvent.subscribe(()=> {
+        this.loadCart();
+        console.log("Cart loaded");
+      });
     this.loadCart();
+  };
+
+
+  ngOnDestroy(): void {
+    this.itemComponentEvent.unsubscribe();
   }
 
   loadCart() {
     this.cartService.getCartItems().subscribe({
-      next: (res: { data: CartItem[]; }) => this.cartItems = res.data,
+      next: (res: { data: CartItem[]; total_price: number } ) => {
+        console.log("REfreshin cart,",res);
+        this.cartItems = res.data;
+        this.totalPrice = res.total_price;
+
+        //For frontend subtotal calculation
+        // this.cartItems.forEach((cartItem: CartItem) => {
+          // this.subTotals[cartItem.id] =  this.calcSubTotal(cartItem);
+        // })
+      },
       error: (err: any) => this.error = 'Could not load cart'
     });
   }
@@ -39,22 +63,36 @@ export class CartComponent implements OnInit {
       next: () => { 
         this.loadCart(); 
         this.error = "";
+
+        //For frontend subtotal calculation
+        // this.subTotals[cartItem.id] = this.calcSubTotal(cartItem);
       },
-      error: (_err) => this.error = 'Could not update item'
+      error: (_err) => {
+        this.error = 'Could not update item. '+ JSON.stringify(_err.error.error).slice(1,-1);
+        this.loadCart();
+      }
     });
-    this.subTotals[cartItem.id] = this.subTotalPrice(cartItem);
   }
 
   removeItem(cartItem: CartItem) {
     this.cartService.removeCartItem(cartItem.id).subscribe({
-      next: () => this.loadCart(),
-      error: (_err) => this.error = 'Could not remove item'
+      next: () => {
+        this.loadCart();
+
+        //For frontend subtotal calculation
+        // delete this.subTotals[cartItem.id];
+      },
+      error: (_err) => this.error = 'Could not remove item. ' 
     });
   }
 
   deleteCart() {
-    console.log("Deleting cart")
-    this.cartService.deleteCart();
+    this.cartItems.forEach((cartItem: CartItem) => {
+        this.cartService.removeCartItem(cartItem.id).subscribe({
+        next: () => this.loadCart(),
+        error: (_err) => this.error = 'Could not delete cart. ' 
+      });
+    });
   }
 
   redirectToLogin() {
@@ -67,10 +105,11 @@ export class CartComponent implements OnInit {
 
   // Calculate total price if items include a price property
 
-  subTotalPrice(cartItem: CartItem) {
+  calcSubTotal(cartItem: CartItem) {
     return cartItem.item_count * cartItem.item.price;
   }
-  get totalPrice(): number {
-    return this.cartItems.reduce((total, ci) => total + (ci.item.price || 0) * ci.item_count, 0);
-  }
+  // get totalPrice(): number {
+  //   // return this.cartItems.reduce((total, ci) => total + (ci.item.price || 0) * ci.item_count, 0);
+  //   return this.cartItems.reduce((total, ci) => total + (ci.subtotal || 0), 0);
+  // }
 }

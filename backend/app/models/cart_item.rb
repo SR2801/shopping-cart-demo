@@ -1,7 +1,7 @@
 class CartItem < ApplicationRecord
-  class CartItem < ApplicationRecord
     belongs_to :cart
     belongs_to :item
+    # has_one :item
   
     validates :quantity, numericality: { greater_than_or_equal_to: 1 }
   
@@ -13,6 +13,5 @@ class CartItem < ApplicationRecord
     def set_default_quantity
       self.quantity ||= 1
     end
-  end
-  
 end
+

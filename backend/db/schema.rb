@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_03_023519) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_08_093818) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -63,11 +63,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_023519) do
   create_table "cart_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "item_count", default: 0
     t.bigint "cart_id", null: false
-    t.bigint "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "subtotal", precision: 10
+    t.decimal "subtotal", precision: 10, scale: 2, default: "0.0"
     t.integer "quantity", default: 1
+    t.bigint "item_id", null: false
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["item_id"], name: "index_cart_items_on_item_id"
   end
@@ -82,17 +82,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_023519) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.decimal "total_price", precision: 10, scale: 2, default: 0
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.float "price"
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "inventory_count"
-    t.decimal "rating", precision: 3, scale: 1, default: "0.0"
+    t.decimal "rating", precision: 3, scale: 1, default: 0
     t.string "type"
+    t.bigint "cart_items_id"
+    t.index ["cart_items_id"], name: "index_items_on_cart_items_id"
   end
 
   create_table "items_subscribers", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -137,8 +140,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_03_023519) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
-  add_foreign_key "cart_items", "items"
   add_foreign_key "carts", "users"
+  add_foreign_key "items", "cart_items", column: "cart_items_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "subscribers", "items"
 end

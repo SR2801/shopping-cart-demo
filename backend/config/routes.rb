@@ -1,5 +1,10 @@
 
 Rails.application.routes.draw do
+
+  # devise :database_authenticatable, :registerable,
+  # :recoverable, :rememberable, :validatable,
+  # :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
+
   # devise_for :users
   devise_for :users,  defaults: { format: :json }, controllers: {
     sessions: 'sessions',
@@ -13,7 +18,7 @@ Rails.application.routes.draw do
   root to: "items#index"
 
 
-  resources :carts, only: %i[index destroy] do
+  resources :carts, only: %i[index] do
     # resources :cart_items, only: [] do
         patch 'update', on: :member  # Increment or decrement item count
         delete 'remove', on: :member  # Remove item from the cart

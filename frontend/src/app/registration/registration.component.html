@@ -56,6 +56,9 @@
 
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
+    <div *ngFor = "let error of errors">
+      <li>{{ error }}</li>
+    </div>
   </div>
 
   <div *ngIf="!errorMessage && isSuccessful">

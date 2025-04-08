@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   def add_to_cart
     @cart_item = @cart.cart_items.find_by(item_id: @item.id)
     if @cart_item.nil?
-      @cart_item = @cart.cart_items.create(item_id: @item.id) 
+      @cart_item = @cart.cart_items.create(item: @item) 
       @cart_item.subtotal = @cart_item.item_count * @item.price
       @cart_item.increment!(:item_count)
       render json: { message: 'Item added to cart', item: @cart_item }, status: :created

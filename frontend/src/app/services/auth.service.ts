@@ -22,13 +22,13 @@ import { isPlatformBrowser, Location } from "@angular/common";
   }
 
   login(email: string, password: string) {
-    console.log("Credentials: ",email, password);
+    // console.log("Credentials: ",email, password);
     this.credentials = {email: email, password: password}
     return this.http.post(`${this.baseUrl}/users/sign_in`, this.credentials).pipe(
       map((response: any) => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
-          console.log(`localstorgae stored!!!!!!!!: ${localStorage.getItem('token')}`)
+          // console.log(`localstorgae stored!!!!!!!!: ${localStorage.getItem('token')}`)
           localStorage.setItem('cart_id', response.cart_id);
         }
         else{
@@ -66,7 +66,8 @@ import { isPlatformBrowser, Location } from "@angular/common";
 
     isAuthenticated(): boolean {
         if (isPlatformBrowser(this.platformId)) { 
-          return !!localStorage.getItem('token');
+          // console.log("Got item: ", localStorage.getItem(this.tokenKey));
+          return !!localStorage.getItem(this.tokenKey);
         }
         return false;
       }
@@ -74,7 +75,7 @@ import { isPlatformBrowser, Location } from "@angular/common";
       getHeaderToken(): HttpHeaders {
         const token = this.getAuthToken();
         if (!token) {
-          console.error('No token found in localStorage!');
+          // console.error('No token found in localStorage!');
           return new HttpHeaders(); // Return an empty headers object to avoid errors
         }
         // console.log(`token fetched: ${token}`)

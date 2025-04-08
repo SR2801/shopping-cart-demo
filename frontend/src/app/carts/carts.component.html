@@ -2,6 +2,7 @@
   <p>Loading...</p>
 </div>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div *ngIf="isAuthenticated" >
   <div class="container">
@@ -10,22 +11,26 @@
       <div *ngIf="error" class="error">{{ error }}</div>
     </div>
     <div *ngIf="cartItems.length === 0">
-      <p>Your cart is empty.</p>
+      <p style = "text-align: center;">Your cart is empty.</p>
     </div>
     <div class="cart-item" *ngFor="let cartItem of cartItems">
       <div class="item-info">
-        <h3>Product ID: {{ cartItem.item.id }}</h3>
-        <h3>Cart Item ID: {{ cartItem.id }}</h3>
+        <h3>ID: {{ cartItem.item.id }}</h3>
+        <!-- <h3>Cart Item ID: {{ cartItem.id }}</h3> -->
         <h3>{{ cartItem.item.name }}</h3>
         <p>Price: ${{ cartItem.item.price }}</p>
         <p>Quantity: {{ cartItem.item_count }}</p>
       </div>
       <div class="item-actions">
-        <button (click)="updateItem(cartItem, '+')">+</button>
-        <input type="text" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
-        <button (click)="updateItem(cartItem, '-')">-</button>
-        <button (click)="removeItem(cartItem)">Remove</button>
-        <p class="subtotal">Subtotal: {{ subTotals[cartItem.id] }}</p>
+          <button (click)="updateItem(cartItem, '+')">+</button>
+          <input type="text" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
+          <button (click)="updateItem(cartItem, '-')">-</button>
+          <button class ="item-actions-remove" (click)="removeItem(cartItem)">
+          Remove
+          <!-- <img src="../../../public/red-trash-can-icon.png" alt="red-trash-can-icon"/> -->
+        </button>
+        <p class="subtotal">Subtotal: ${{ cartItem.subtotal }}</p>
+        <!-- <p class="subtotal">Subtotal: ${{ subTotals[cartItem.id] }}</p> -->
       </div>
     </div>
     <div class="total">

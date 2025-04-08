@@ -10,7 +10,7 @@ header {
 
 nav {
   display: flex;
-  justify-content: left; /* Align items to the left */
+  justify-content: space-between; /* Align items to the left */
   padding: 1rem 2rem;
   border-bottom: 3px solid #eee; /* Light border for separation */
   font-family: sans-serif;
@@ -49,5 +49,5 @@ body {
     font-family: sans-serif;
     line-height: 1.6;
     color: #333;
-
 }
+
