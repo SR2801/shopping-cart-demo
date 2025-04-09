@@ -11,12 +11,15 @@ import { CartComponent } from "./carts/carts.component";
     RouterOutlet,
     RouterLink,
     FormsModule,
-    CommonModule
+    CommonModule,
+    CartComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+isAuthenticated: any;
+showCart: boolean  = false;
   // private isCartOpen: boolean = false;
   // get previewCart(): boolean { 
   //   this.isCartOpen = (this.isCartOpen != false);
@@ -28,4 +31,12 @@ export class AppComponent {
     this.router.navigate(['/login']);
   }
   title = 'frontend';
+
+
+  get cartState() {
+    return this.showCart ? 'in' : 'out';
+  }
+  toggleCart() {
+    this.showCart = !this.showCart;
+  }
 }

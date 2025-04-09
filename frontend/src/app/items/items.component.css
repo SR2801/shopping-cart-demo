@@ -41,7 +41,8 @@
   position: sticky;
   top: 1rem;
   max-width: 30%;
-  min-width: 500px;
+  width: 20%;
+  
 }
 
 /* Button Styling */

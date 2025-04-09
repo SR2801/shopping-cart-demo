@@ -16,11 +16,10 @@
 
 
 
-  <div class="cart" *ngIf="isAuthenticated" >
-
-  <button (click)="toggleCart()" class="cart-toggle-button">
-    {{ showCart ? 'Hide Cart' : 'Show Cart' }}
-  </button>
-    <app-cart></app-cart>
+  <div class="cart" *ngIf="isAuthenticated && showCart">
+    <div>
+      <button (click)="toggleCart()">Close cart</button>
+      <app-cart></app-cart>
+    </div>
   </div>
 </div>

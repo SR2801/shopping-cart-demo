@@ -22,12 +22,14 @@
         <p>Quantity: {{ cartItem.item_count }}</p>
       </div>
       <div class="item-actions">
-          <button (click)="updateItem(cartItem, '+')">+</button>
-          <input type="text" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/>
-          <button (click)="updateItem(cartItem, '-')">-</button>
+          <button class="item-actions-update" (click)="updateItem(cartItem, '+')">+</button>
+          <!-- <input type="text" [(ngModel)]="cartItem.item_count" (ngModelChange)="updateItem(cartItem, ''+cartItem.item_count)"/> -->
+           <button>{{cartItem.item_count}}</button>
+          <button class="item-actions-update" (click)="updateItem(cartItem, '-')">-</button>
           <button class ="item-actions-remove" (click)="removeItem(cartItem)">
-          Remove
-          <!-- <img src="../../../public/red-trash-can-icon.png" alt="red-trash-can-icon"/> -->
+          <!-- Remove -->
+           <!-- <img [src]="'assets/red-trash-can-icon.png'" [alt]="'red-trash-can-icon'"/> -->
+          <img src="/red-trash-can-icon.png" alt="red-trash-can-icon"/>
         </button>
         <p class="subtotal">Subtotal: ${{ cartItem.subtotal }}</p>
         <!-- <p class="subtotal">Subtotal: ${{ subTotals[cartItem.id] }}</p> -->

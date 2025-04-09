@@ -27,31 +27,30 @@
     padding: 0.3rem 0.8rem;
     border: none;
     color: white;
-    cursor: pointer;
     text-align: center;
 
   }
   
   .item-actions button {
-    background-color: #007acc;
+    background-color: crimson;
     color: white;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1rem;
+    /* width: 10%; */
 
     border: inherit;
     padding: inherit;
     margin: inherit; 
   }
 
-  /* .item-actions-remove{
-    margin-left: 1rem;
-    width: 75%;
-  } */
+  .item-actions-update {
+    background-color: blue; 
+  }
 
   .item-actions input{
     text-align: center;
     background-color: #a3712f;
-    max-width: 30px;
+    width: 5%;
 
     border: inherit; /* inherit border from parent, or set to none */
     padding: inherit; /* inherit padding from parent, or set to a specific value*/
@@ -69,6 +68,10 @@
     background-color: #005fa3;
   }
   
+  .item-actions img{
+    width: 20px;
+    padding:  0 5px 0 5px ;
+  }
   .total {
     text-align: right;
     font-size: 1.2rem;
@@ -94,12 +97,11 @@
     color: white;
     cursor: pointer;
     padding: 1em;
-    margin: 20px;
-    width: 100%;
+    margin: 1rem;
+    width: 30%;
     position: sticky;
   }
   .total button:hover{
     background-color: red;
     box-shadow: 5px 5px gray;
-    font-weight: bolder;
   }

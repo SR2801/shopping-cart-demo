@@ -10,11 +10,16 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    provideAnimationsAsync(),
+    // provideNoopAnimations(),
+    provideAnimations()
   ]
 });
 

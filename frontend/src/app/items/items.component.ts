@@ -6,6 +6,7 @@ import { CartComponent } from "../carts/carts.component";
 import { CartSyncService } from '../shared/cart-sync.service';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-items-list',
   templateUrl: './items.component.html',
@@ -37,6 +38,7 @@ export class ItemsComponent implements OnInit {
   }
 
   addToCart(itemId: number) {
+    this.showCart = true;
     if(!this.isAuthenticated){
       this.alert = "Please login";
       this.alert_id  = itemId;
@@ -51,8 +53,7 @@ export class ItemsComponent implements OnInit {
     });
     this.alert_id = itemId;
   }
-
-
+  
   toggleCart() {
     this.showCart = !this.showCart;
   }

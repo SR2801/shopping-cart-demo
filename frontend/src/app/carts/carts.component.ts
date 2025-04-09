@@ -82,16 +82,16 @@ throw new Error('Method not implemented.');
         //For frontend subtotal calculation
         // delete this.subTotals[cartItem.id];
       },
-      error: (_err) => this.error = 'Could not remove item. ' 
+      error: (err) => this.error = 'Could not remove item. ' 
     });
   }
 
   deleteCart() {
-    this.cartItems.forEach((cartItem: CartItem) => {
-        this.cartService.removeCartItem(cartItem.id).subscribe({
-        next: () => this.loadCart(),
-        error: (_err) => this.error = 'Could not delete cart. ' 
-      });
+    this.cartService.deleteCart().subscribe({
+      next: ()=>{
+        this.loadCart();
+      },
+      error: (err) => this.error = "Could not empty cart."
     });
   }
 
