@@ -25,5 +25,6 @@ Rails.application.routes.draw do
     # end
   end
   get 'carts/', to: 'carts#index'
+  delete 'carts/', to: 'carts#destroy'
     
 end

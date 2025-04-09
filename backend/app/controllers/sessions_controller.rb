@@ -1,16 +1,10 @@
-# app/controllers/api/sessions_controller.rb
-# module Api
-# 
-#
 require Rails.root.join('app', 'services', 'jwt_service')
 class SessionsController < Devise::SessionsController
   # respond_to :json
-  skip_before_action :authenticate_with_token!, only: [:create]  # Don't require authentication for login
+  skip_before_action :authenticate_with_token!, only: [:create, :new ]  # Don't require authentication for login
 
   def create
-    # params = params[:user]
     user = User.find_by(email: params[:email])
-    # puts "params: #{params} username: #{user_params[:email]}, user: #{User.find_by(email: user_params[:email])}"
     if user.nil?
       render json: {error: 'User unavailable, please sign up'}, status: :not_found
     elsif user && user.valid_password?(params[:password])
